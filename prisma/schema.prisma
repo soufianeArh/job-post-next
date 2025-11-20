@@ -10,6 +10,83 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = "mysql://root:rootpassword@127.0.0.1:3306/job_front"
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?   @db.Text
+  access_token      String?   @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?   @db.Text
+  session_state     String?
+
+  user User @relation(fields:[userId], references:[id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id            String   @id @default(cuid())
+  sessionTeken  String   @unique
+  userId        String
+  expires       DateTime
+
+  user User @relation(fields:[userId], references:[id])
+}
+
+model VerificationToken {
+  identifier String
+  token      String     @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id String @id @default(cuid())
+  name String
+  email String? @unique
+  emailVerified DateTime?
+  image String?
+  accounts  Account[]
+  sessions Session[]
+  jobs Job[] @relation("PostedJobs")
+  applications Application[] @relation("ApplicantId")
+}
+
+model Job {
+  id String @id @default(cuid())
+  title String
+  company String
+  location String
+  type String
+  description String?
+  postedAt DateTime @default(now())
+
+  postedBy String
+  user User @relation("PostedJobs",fields:[postedBy], references:[id])
+
+  applications Application[] @relation("PostedJobId")
+}
+
+
+model Application {
+  id String @id @default(cuid())
+  jobId String
+  status String @default("PENDING")
+  userId String
+  appliedAt DateTime @default(now())
+
+  user User @relation("ApplicantId", fields:[userId], references:[id])
+  job Job @relation("PostedJobId", fields:[jobId], references:[id])
+
+  @@unique([jobId, userId])
 }
