@@ -3,7 +3,8 @@ import Github from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
+
+import {prisma} from "@/lib/prisma"
 
 export const {auth, signIn, signOut, handlers} = NextAuth({
       session:{
@@ -27,5 +28,4 @@ export const {auth, signIn, signOut, handlers} = NextAuth({
                   return session
             }
       }
-
 })

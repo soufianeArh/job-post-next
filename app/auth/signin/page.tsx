@@ -1,4 +1,5 @@
 import Image from "next/image"
+import {login} from "@/lib/auth"
 export default function SignIn(){
       return (
       <div>
@@ -14,7 +15,7 @@ export default function SignIn(){
                         width={10}
                         height={10}
                         />
-                        <button>
+                        <button onClick={login} >
                               signin with github
                         </button>
                   </div>
