@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import Github from "next-auth/providers/github"
-import Google from "next-auth/providers/google"
 
 import { PrismaAdapter } from "@auth/prisma-adapter"
 
@@ -10,7 +9,7 @@ export const {auth, signIn, signOut, handlers} = NextAuth({
       session:{
             strategy:"jwt"
       },
-      providers: [Github, Google],
+      providers: [Github],
       adapter: PrismaAdapter(prisma),
       callbacks: {
             async jwt({token, user}){
