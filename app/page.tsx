@@ -1,6 +1,10 @@
 import Image from "next/image";
+import { Redirect } from "next";
+import { useSession } from "next-auth/react";
 
-export default function Home() {
+export default async function Home() {
+  const session = await useSession();
+  if(!session) //redirect to login
   return (
     <div>
       hi

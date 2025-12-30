@@ -1,8 +1,29 @@
-export default function PostJobPage(){
+"use client";
+
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, FormEvent } from "react";
+
+
+export default async function PostJobPage(){
+
+      const submitHandler = async (e: FormEvent<HTMLFormElement>)=>{
+            e.preventDefault();
+            const formData = new FormData(e.currentTarget)
+            const data = {
+                  title:formData.get("title"),
+                  company:formData.get("company"),
+                  localization:formData.get("localization"),
+                  type:formData.get("type"),
+                  description:formData.get("description")
+            }
+            console.log(data)
+            //prisma
+      } 
       return (
             <div className="max-w-2xl mx-auto">
                   <h1 className="text-xl font-bold mb-4">Make a Job Post</h1>
-                  <form>
+                  <form onSubmit={submitHandler}>
                         <div className="mb-3">
                               <label className="text-gray-600">Job Title</label>
                               <input
@@ -30,8 +51,8 @@ export default function PostJobPage(){
                               <input
                               type="text"
                               placeholder="inset Localization"
-                              name="Localization"
-                              id="Localization"
+                              name="localization"
+                              id="localization"
                               required
                               className="w-full border-2 border-gray-400 rounded-lg p-2"
                               />
@@ -41,6 +62,7 @@ export default function PostJobPage(){
                               <select
                               name="type"
                               id="type"
+                              required
                               className="w-full border-2 border-gray-400 rounded-lg p-2"
                               >
                                     <option value="">Select a type</option>
@@ -60,7 +82,8 @@ export default function PostJobPage(){
                               className="w-full border-2 border-gray-400 rounded-lg p-2"
                               />
                         </div>
-                        <button className="w-full rouded-xl bg-blue-700 text-white font-bold text-center p-2">
+                        <button
+                        className="w-full rouded-xl bg-blue-700 text-white font-bold text-center p-2">
                               Post Job
                         </button>
                   </form>

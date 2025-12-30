@@ -71,8 +71,8 @@ model Job {
   description String?
   postedAt DateTime @default(now())
 
-  postedBy String
-  user User @relation("PostedJobs",fields:[postedBy], references:[id])
+  postedById String
+  user User @relation("PostedJobs",fields:[postedById], references:[id])
 
   applications Application[] @relation("PostedJobId")
 }
