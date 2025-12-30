@@ -69,6 +69,7 @@ model Job {
   location String
   type String
   description String?
+  salary String
   postedAt DateTime @default(now())
 
   postedById String
