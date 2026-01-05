@@ -1,10 +1,13 @@
+import Link from "next/link"
+
 interface card{
       salary: String,
       title:String,
       company: String,
       location: String,
       description: String | null,
-      postedById: String
+      postedById: String,
+      id: string
 }
 
 export default function JobCard(info:card){
@@ -27,6 +30,7 @@ export default function JobCard(info:card){
               {info.description}
             </p>
             <span>PostedById:{info.postedById} </span>
+            <Link href={`/jobs/${info.id}`} className="text-blue-400">Check Job</Link>
           </div>
       )
 }

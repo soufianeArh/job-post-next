@@ -83,6 +83,7 @@ export default async function Jobs(
                    location={job.company}
                    description={job.description}
                    postedById={job.user.name}
+                   id={job.id}
                  />
             )}
         
