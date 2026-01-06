@@ -1,3 +1,4 @@
+import ApplyButton from "@/component/ApplyButton";
 import {prisma} from "@/lib/prisma"
 import Link from "next/link"
 
@@ -10,6 +11,7 @@ export default async function SingleJob({
     }){
       const {id} = await params;
       let job: JobType = null;
+    
       try{
             job= await prisma.job.findUnique({
                   where: {
@@ -43,6 +45,7 @@ export default async function SingleJob({
               <p className="mt-4 text-gray-700">
                 {job?.description}
               </p>
+              <ApplyButton/>
             </div>
           );
 }
